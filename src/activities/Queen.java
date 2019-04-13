@@ -1,12 +1,14 @@
 package activities;
 
 public class Queen {
+    private final int index;
     private final int row;
     private final int col;
 
-    Queen(int row, int col) {
-        this.row = row;
-        this.col = col;
+    Queen(int index, int maxQueens) {
+        this.index = index;
+        this.row = index / maxQueens;
+        this.col = index % maxQueens;
     }
 
     public int getRow() {
@@ -15,6 +17,10 @@ public class Queen {
 
     public int getCol() {
         return col;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     boolean canAttack(Queen q) {
