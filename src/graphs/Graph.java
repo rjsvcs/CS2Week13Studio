@@ -147,6 +147,46 @@ public class Graph<T> {
     }
 
     /**
+     * Performs a depth first search to determine whether or not a path exists
+     * between the start value and end value in this graph.
+     *
+     * @param startValue The value at which the path should start.
+     * @param endValue The value at which the path should end.
+     *
+     * @return True if the path exists, false otherwise.
+     */
+    public boolean depthFirstSearch(T startValue, T endValue) {
+        Vertex<T> start = vertices.get(startValue);
+        Vertex<T> end = vertices.get(endValue);
+
+        Set<Vertex<T>> visited = new HashSet<>();
+        visited.add(start);
+
+        visitDFS(start, visited);
+
+        return visited.contains(end);
+    }
+
+    /**
+     * Builds a path using a depth first search, if it exists.
+     *
+     * @param startValue The value at which the path should start.
+     * @param endValue The value at which the path should end.
+     *
+     * @return The path as a {@link List} of values if it exists. Null
+     * otherwise.
+     */
+    public List<T> depthFirstPath(T startValue, T endValue) {
+        Vertex<T> start = vertices.get(startValue);
+        Vertex<T> end = vertices.get(endValue);
+
+        Set<Vertex<T>> visited = new HashSet<>();
+        visited.add(start);
+
+        return makeDFSPath(start, end, visited);
+    }
+
+    /**
      * A helper function that, given a map of vertices and their predecessors
      * along a path that has been found, returns the path as a list of values.
      * The start value is not needed because it is the only value in the map
@@ -168,5 +208,52 @@ public class Graph<T> {
         }
 
         return path;
+    }
+
+    /**
+     * Recursively visits the neighbors of the specified vertex that have not
+     * already been visited.
+     *
+     * @param vertex The vertex of which the neighbors should be visited.
+     * @param visited The {@link Set} of previously visited vertices.
+     */
+    private void visitDFS(Vertex<T> vertex, Set<Vertex<T>> visited) {
+        for(Vertex<T> neighbor : vertex.getNeighbors()) {
+            if(!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                visitDFS(neighbor, visited);
+            }
+        }
+    }
+
+    /**
+     * Attempts to make a path from the start vertex to the end vertex.
+     *
+     * @param start The start vertex.
+     * @param end The end vertex.
+     * @param visited The {@link Set} of visited vertices.
+     *
+     * @return A path containing the values between start and end, or null if
+     * no such path exists.
+     */
+    private List<T> makeDFSPath(Vertex<T> start, Vertex<T> end,
+                             Set<Vertex<T>> visited) {
+        if(start == end) {
+            List<T> path = new LinkedList<>();
+            path.add(start.getValue());
+            return path;
+        } else {
+            for(Vertex<T> neighbor : start.getNeighbors()) {
+                if(!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    List<T> path = makeDFSPath(neighbor, end, visited);
+                    if(path != null) {
+                        path.add(0, start.getValue());
+                        return path;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
