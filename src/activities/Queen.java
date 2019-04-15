@@ -5,11 +5,6 @@ package activities;
  */
 public class Queen {
     /**
-     * The index of the queen's position in an array.
-     */
-    private final int index;
-
-    /**
      * The row of the queen's position on a two-dimensional board.
      */
     private final int row;
@@ -21,24 +16,10 @@ public class Queen {
 
     /**
      * Creates a new Queen on a board of the specified size.
-     *
-     * @param index The index of the queen on the board as if it were an array.
-     * @param boardDimension The size of each dimension of a two-dimensional
-     *                       board.
      */
-    Queen(int index, int boardDimension) {
-        this.index = index;
-        this.row = index / boardDimension;
-        this.col = index % boardDimension;
-    }
-
-    /**
-     * Returns the index of the queen on the board.
-     *
-     * @return The queen's position on the board.
-     */
-    public int getIndex() {
-        return index;
+    Queen(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     /**
@@ -57,6 +38,24 @@ public class Queen {
                 deltaCol == 0 ||
                 deltaRow == deltaCol ||
                 -deltaRow == deltaCol;
+    }
+
+    /**
+     * Returns the queen's row on the board.
+     *
+     * @return The queen's row on the board.
+     */
+    public int getRow() {
+        return row;
+    }
+
+    /**
+     * Returns the queen's column on the board.
+     *
+     * @return The queen's column on the board.
+     */
+    public int getCol() {
+        return col;
     }
 
     /**

@@ -10,31 +10,28 @@ public class NQueens implements Configuration {
 
     private final int maxQueens;
     private final Queen[] queens;
-    private final int index;
 
     NQueens(int maxQueens) {
-        this(maxQueens, new Queen[0], -1);
+        this(maxQueens, new Queen[0]);
     }
 
-    NQueens(int maxQueens, Queen[] queens, int index) {
+    NQueens(int maxQueens, Queen[] queens) {
         this.maxQueens = maxQueens;
         this.queens = queens;
-        this.index = index;
     }
 
     @Override
     public Collection<Configuration> getSuccessors() {
         List<Configuration> successors = new ArrayList<>();
 
-        int start = index + 1;
-        int end = maxQueens * maxQueens;
-
-        for(int index=start; index<end; index++) {
-            Queen[] next = Arrays.copyOf(queens, queens.length + 1);
-            next[queens.length] = new Queen(index, maxQueens);
-
-            successors.add(new NQueens(maxQueens, next, index));
-
+        int row = queens.length != 0 ?
+                queens[queens.length-1].getRow() + 1 : 0;
+        if(row < maxQueens) {
+            for(int col=0; col<maxQueens; col++) {
+                Queen[] next = Arrays.copyOf(queens, queens.length + 1);
+                next[queens.length] = new Queen(row, col);
+                successors.add(new NQueens(maxQueens, next));
+            }
         }
 
         return successors;
@@ -58,12 +55,12 @@ public class NQueens implements Configuration {
 
     @Override
     public String toString() {
-        boolean[] board = new boolean[maxQueens*maxQueens];
-        for(Queen queen : queens) {
-            board[queen.getIndex()] = true;
-        }
-
         StringBuilder builder = new StringBuilder();
+
+        boolean[][] board = new boolean[maxQueens][maxQueens];
+        for(Queen queen : queens) {
+            board[queen.getRow()][queen.getCol()] = true;
+        }
 
         for(int index=0; index<maxQueens*maxQueens; index++) {
             int row = index / maxQueens;
@@ -73,7 +70,7 @@ public class NQueens implements Configuration {
                 builder.append(NL);
                 builder.append(COL_SEPARATOR);
             }
-            builder.append(board[index] ? 'Q' : ' ');
+            builder.append(board[row][col] ? 'Q' : ' ');
             builder.append(COL_SEPARATOR);
         }
 
