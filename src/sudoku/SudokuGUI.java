@@ -82,6 +82,13 @@ public class SudokuGUI extends Application implements Sudoku {
         stage.show();
     }
 
+    /**
+     * Makes one of the 3x3 regions that make up the board.
+     *
+     * @param regionRow The number of the region's row.
+     * @param regionCol The number of the region's column.
+     * @return The 3x3 region as a {@link GridPane}.
+     */
     private GridPane makeRegion(int regionRow, int regionCol) {
         int startRow = regionRow * REGIONS;
         int startCol = regionCol * REGIONS;
@@ -101,6 +108,11 @@ public class SudokuGUI extends Application implements Sudoku {
         return region;
     }
 
+    /**
+     * Makes a sudoku board from the numbers currently entered into the UI and
+     * then attempts to find a solution to the puzzle using backtracking. If
+     * it finds one, the GUI is updated with the correct solution.
+     */
     private void solve() {
         int[][] board = new int[ROWS][COLS];
         int moves = 0;
@@ -125,6 +137,9 @@ public class SudokuGUI extends Application implements Sudoku {
     }
 
 
+    /**
+     * Clears anything currently typed into the UI.
+     */
     private void clearBoard() {
         for(int row=0; row<ROWS; row++) {
             for(int col=0; col<COLS; col++) {
@@ -135,6 +150,12 @@ public class SudokuGUI extends Application implements Sudoku {
         }
     }
 
+    /**
+     * Updates the Ui to display the contents of the specified board (0 values
+     * are not displayed).
+     *
+     * @param board The board to display.
+     */
     private void setBoard(int[][] board) {
         for(int row=0; row<ROWS; row++) {
             for(int col=0; col<COLS; col++) {
