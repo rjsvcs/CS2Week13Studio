@@ -1,9 +1,7 @@
 package sudoku;
 
 import backtracker.Backtracker;
-import backtracker.Configuration;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,8 +11,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class SudokuGUI extends Application implements Sudoku {
     /**
@@ -37,7 +33,7 @@ public class SudokuGUI extends Application implements Sudoku {
             new BackgroundFill(Color.BLACK, CornerRadii.EMPTY,
             Insets.EMPTY));
 
-    private final TextField[][] input = new TextField[COLS][ROWS];
+    private final TextField[][] input = new TextField[SIZE][SIZE];
     private final Backtracker backtracker = new Backtracker(false);
     private Label feedback;
 
@@ -114,11 +110,11 @@ public class SudokuGUI extends Application implements Sudoku {
      * it finds one, the GUI is updated with the correct solution.
      */
     private void solve() {
-        int[][] board = new int[ROWS][COLS];
+        int[][] board = new int[SIZE][SIZE];
         int moves = 0;
 
-        for(int row=0; row<ROWS; row++) {
-            for(int col=0; col<COLS; col++) {
+        for(int row = 0; row< SIZE; row++) {
+            for(int col = 0; col< SIZE; col++) {
                 TextField field = input[row][col];
                 String value = field.getText().trim();
                 if(value.equals("")) {
@@ -141,8 +137,8 @@ public class SudokuGUI extends Application implements Sudoku {
      * Clears anything currently typed into the UI.
      */
     private void clearBoard() {
-        for(int row=0; row<ROWS; row++) {
-            for(int col=0; col<COLS; col++) {
+        for(int row=0; row<SIZE; row++) {
+            for(int col=0; col<SIZE; col++) {
                 TextField field = input[row][col];
                 field.setText("");
                 field.setStyle(REGULAR);
@@ -157,8 +153,8 @@ public class SudokuGUI extends Application implements Sudoku {
      * @param board The board to display.
      */
     private void setBoard(int[][] board) {
-        for(int row=0; row<ROWS; row++) {
-            for(int col=0; col<COLS; col++) {
+        for(int row=0; row<SIZE; row++) {
+            for(int col=0; col<SIZE; col++) {
                 input[row][col].setText(Integer.toString(board[row][col]));
             }
         }
