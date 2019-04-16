@@ -30,6 +30,13 @@ public class SudokuGUI extends Application implements Sudoku {
     private static final String REGULAR =
             "-fx-font-weight: normal;";
 
+    /**
+     * A black background fill.
+     */
+    private static final Background BACKGROUND_BLACK = new Background(
+            new BackgroundFill(Color.BLACK, CornerRadii.EMPTY,
+            Insets.EMPTY));
+
     private final TextField[][] input = new TextField[COLS][ROWS];
     private final Backtracker backtracker = new Backtracker(false);
     private Label feedback;
@@ -37,13 +44,13 @@ public class SudokuGUI extends Application implements Sudoku {
     @Override
     public void start(Stage stage) throws Exception {
         GridPane grid = new GridPane();
-        for(int row=0; row<ROWS; row++) {
-            for(int col=0; col<COLS; col++) {
-                TextField field = new TextField("");
-                input[row][col] = field;
-                field.setPrefColumnCount(1);
-                field.setFont(new Font("Courier New", 18));
-                grid.add(field, col, row);
+        grid.setPadding(new Insets(3));
+        grid.setBackground(BACKGROUND_BLACK);
+
+        for(int row=0; row<3; row++) {
+            for(int col=0; col<3; col++) {
+                GridPane region = makeRegion(row, col);
+                grid.add(region, col, row);
             }
         }
 
@@ -73,6 +80,25 @@ public class SudokuGUI extends Application implements Sudoku {
         stage.setTitle("Sudoku Solver");
         stage.setScene(new Scene(main));
         stage.show();
+    }
+
+    private GridPane makeRegion(int regionRow, int regionCol) {
+        int startRow = regionRow * REGIONS;
+        int startCol = regionCol * REGIONS;
+
+        GridPane region = new GridPane();
+        region.setBackground(BACKGROUND_BLACK);
+        region.setPadding(new Insets(3));
+        for(int row=0; row<3; row++) {
+            for(int col=0; col<3; col++) {
+                TextField field = new TextField("");
+                input[row+startRow][col+startCol] = field;
+                field.setPrefColumnCount(1);
+                field.setFont(new Font("Courier New", 18));
+                region.add(field, col, row);
+            }
+        }
+        return region;
     }
 
     private void solve() {
