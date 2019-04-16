@@ -43,6 +43,17 @@ public class Graph<T> {
     }
 
     /**
+     * Adds all of the specified values to the graph.
+     *
+     * @param values The values to add to the graph.
+     */
+    public void addValues( T ... values) {
+        for(T value : values) {
+            addValue(value);
+        }
+    }
+
+    /**
      * Establishes a directed connection between the first value and all of
      * the other values.
      *
