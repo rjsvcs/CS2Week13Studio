@@ -37,7 +37,7 @@ public class Backtracker {
      */
     private void debugPrint(String msg, Configuration config) {
         if (this.debug) {
-            System.out.println(msg + ": " + config);
+            System.out.println(msg + ":\n" + config);
         }
     }
     
@@ -48,20 +48,20 @@ public class Backtracker {
      * @return A solution config, or null if no solution
      */
     public Optional<Configuration> solve(Configuration config) {
-        debugPrint("Current config\n", config);
+        debugPrint("Current config", config);
         if (config.isGoal()) {
-            debugPrint("\tGoal config\n", config);
+            debugPrint("\tGoal config", config);
             return Optional.of(config);
         } else {
             for (Configuration child : config.getSuccessors()) {
                 if (child.isValid()) {
-                    debugPrint("\tValid successor\n", child);
+                    debugPrint("\tValid successor", child);
                     Optional<Configuration> sol = solve(child);
                     if (sol.isPresent()) {
                         return sol;
                     }
                 } else {
-                    debugPrint("\tInvalid successor\n", child);
+                    debugPrint("\tInvalid successor", child);
                 }
             }
             // implicit backtracking happens here
