@@ -1,0 +1,5 @@
+Git will not allow empty directories to be committed to a repository.
+
+This file is here just so that the directory is not empty.
+
+You may delete it.

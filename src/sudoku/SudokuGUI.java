@@ -1,7 +1,9 @@
 package sudoku;
 
 import backtracker.Backtracker;
+import backtracker.Configuration;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +13,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class SudokuGUI extends Application implements Sudoku {
     /**
@@ -23,8 +27,9 @@ public class SudokuGUI extends Application implements Sudoku {
     /**
      * Regular text style.
      */
-    private static final String REGULAR =
-            "-fx-font-weight: normal;";
+    private static final String NORMAL =
+            "-fx-font-weight: normal;" +
+            "-fx-text-inner-color: black";
 
     /**
      * A black background fill.
@@ -94,10 +99,11 @@ public class SudokuGUI extends Application implements Sudoku {
         region.setPadding(new Insets(3));
         for(int row=0; row<3; row++) {
             for(int col=0; col<3; col++) {
-                TextField field = new TextField("");
+                TextField field = new TextField(" ");
                 input[row+startRow][col+startCol] = field;
                 field.setPrefColumnCount(1);
                 field.setFont(new Font("Courier New", 18));
+                field.setStyle(NORMAL);
                 region.add(field, col, row);
             }
         }
@@ -118,7 +124,7 @@ public class SudokuGUI extends Application implements Sudoku {
                 TextField field = input[row][col];
                 String value = field.getText().trim();
                 if(value.equals("")) {
-                    field.setStyle(REGULAR);
+                    field.setStyle(NORMAL);
                     board[row][col] = 0;
                 } else {
                     field.setStyle(BOLD);
@@ -129,7 +135,6 @@ public class SudokuGUI extends Application implements Sudoku {
         }
 
         // create configuration and run backtracker here
-
     }
 
 
@@ -141,7 +146,7 @@ public class SudokuGUI extends Application implements Sudoku {
             for(int col=0; col<SIZE; col++) {
                 TextField field = input[row][col];
                 field.setText("");
-                field.setStyle(REGULAR);
+                field.setStyle(NORMAL);
             }
         }
     }
