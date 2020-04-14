@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SudokuGUI" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
     <option name="MAIN_CLASS_NAME" value="sudoku.SudokuGUI" />
     <module name="CS2Week13Studio" />
-    <option name="VM_PARAMETERS" value="--module-path C:\Users\phinn\javafx-sdk-11.0.1\lib --add-modules=ALL-MODULE-PATH" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="sudoku.*" />
